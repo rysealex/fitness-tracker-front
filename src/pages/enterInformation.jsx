@@ -25,7 +25,7 @@ function EnterInformation() {
         <Stack spacing={2} direction="column" width='25ch'>
           <TextField id="fname" label="First Name" variant="outlined" />
           <TextField id="lname" label="Last Name" variant="outlined" />
-          <TextField id="height" label="Height (inch)" variant="outlined" type="number" />
+          <TextField id="height" label="Height (feet)" variant="outlined" type="number" />
           <TextField id="weight" label="Weight (lbs)" variant="outlined" type="number" />
           <TextField id="age" label="Age" variant="outlined" type="number" />
           <FormControl fullWidth>
