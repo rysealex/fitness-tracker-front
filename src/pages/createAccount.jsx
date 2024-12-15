@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useUser } from '../userContext';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
@@ -11,7 +12,7 @@ function CreateAccount() {
   const handleNavigate = (url) => {
     navigate(url);
   };
-  const [username, setUsername] = useState("");
+  const { username, setUsername } = useUser();
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
   const [errorFlag, setErrorFlag] = useState(false);
