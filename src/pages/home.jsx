@@ -12,8 +12,13 @@ function Home() {
   const handleNavigate = (url) => {
     navigate(url);
   };
-  const { username } = useUser();
+  const { username, setUsername } = useUser();
   const [stats, setStats] = useState({});
+  // Event handler for sign out button
+  const handleSignOut = (event) => {
+    setUsername("");
+    handleNavigate('/');
+  };
   useEffect(() => {
     axios.get(`http://127.0.0.1:5000/user/${username}/stats`)
       .then(function (response) {
@@ -77,7 +82,7 @@ function Home() {
           />
         </div>
       </div>
-      <Button variant="contained" onClick={() => handleNavigate("/")}>Sign Out</Button>
+      <Button variant="contained" onClick={() => handleSignOut()}>Sign Out</Button>
     </Container>
   )
 };
