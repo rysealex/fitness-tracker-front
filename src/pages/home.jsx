@@ -19,6 +19,25 @@ function Home() {
     setUsername("");
     handleNavigate('/');
   };
+  // Event handler for edit buttons
+  const [editModeWeight, setEditModeWeight] = useState(false);
+  const handleClickWeight = () => {
+    if (editModeWeight === true) {
+      setEditModeWeight(false);
+    }
+    else {
+      setEditModeWeight(true);
+    }
+  };
+  const [editModeHeight, setEditModeHeight] = useState(false);
+  const handleClickHeight = () => {
+    if (editModeHeight === true) {
+      setEditModeHeight(false);
+    }
+    else {
+      setEditModeHeight(true);
+    }
+  };
   useEffect(() => {
     axios.get(`http://127.0.0.1:5000/user/${username}/stats`)
       .then(function (response) {
@@ -56,6 +75,8 @@ function Home() {
             unit="lbs"
           //icon={<FaWalking />}
           />
+          <Button variant="contained" onClick={handleClickWeight}>Edit</Button>
+          {editModeWeight && <input type="text" />}
         </div>
         <div style={{ width: '100%', maxWidth: '300px', marginBottom: '20px' }}>
           <StatCard
@@ -64,6 +85,8 @@ function Home() {
             unit="feet"
           //icon={<FaFireAlt />}
           />
+          <Button variant="contained" onClick={handleClickHeight}>Edit</Button>
+          {editModeHeight && <input type="text" />}
         </div>
         <div style={{ width: '100%', maxWidth: '300px', marginBottom: '20px' }}>
           <StatCard
