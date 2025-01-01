@@ -14,6 +14,8 @@ function Home() {
   };
   const { username, setUsername } = useUser();
   const [stats, setStats] = useState({});
+  const [weightInput, setWeightInput] = useState(stats.weight);
+  const [heightInput, setHeightInput] = useState(stats.height);
   // Event handler for sign out button
   const handleSignOut = (event) => {
     setUsername("");
@@ -22,27 +24,51 @@ function Home() {
   // Event handler for edit buttons
   const [editModeWeight, setEditModeWeight] = useState(false);
   const handleClickWeight = () => {
-    if (editModeWeight === true) {
-      setEditModeWeight(false);
-    }
-    else {
-      setEditModeWeight(true);
-    }
+    setEditModeWeight(!editModeWeight);
   };
   const [editModeHeight, setEditModeHeight] = useState(false);
   const handleClickHeight = () => {
-    if (editModeHeight === true) {
-      setEditModeHeight(false);
-    }
-    else {
-      setEditModeHeight(true);
-    }
+    setEditModeHeight(!editModeHeight);
   };
+  // Event handler for saving the new values
+  const handleSaveWeight = () => {
+    const updatedStats = { ...stats, weight: weightInput };
+    setStats(updatedStats);
+    // Connect to backend here
+    axios.put(`http://127.0.0.1:5000/user/${username}/stats`, {
+      weight: weightInput
+    })
+      .then(response => {
+        console.log("Weight updated successfully:", response.data);
+        setEditModeWeight(false);
+      })
+      .catch(error => {
+        console.log("Error updating weight:", error);
+      });
+  };
+  const handleSaveHeight = () => {
+    const updatedStats = { ...stats, height: heightInput };
+    setStats(updatedStats);
+    // Connect to backend here
+    axios.put(`http://127.0.0.1:5000/user/${username}/stats`, {
+      height: heightInput
+    })
+      .then(response => {
+        console.log("Height updated successfully:", response.data);
+        setEditModeHeight(false);
+      })
+      .catch(error => {
+        console.log("Error updating height:", error);
+      });
+  };
+  // Fetch user stats
   useEffect(() => {
     axios.get(`http://127.0.0.1:5000/user/${username}/stats`)
       .then(function (response) {
         console.log(response);
         setStats(response.data);
+        setWeightInput(response.data.weight);
+        setHeightInput(response.data.height);
       })
       .catch(function (error) {
         console.log(error);
@@ -76,7 +102,16 @@ function Home() {
           //icon={<FaWalking />}
           />
           <Button variant="contained" onClick={handleClickWeight}>Edit</Button>
-          {editModeWeight && <input type="text" />}
+          {editModeWeight && (
+            <>
+              <input
+                type="text"
+                value={weightInput}
+                onChange={(e) => setWeightInput(e.target.value)}
+              />
+              <Button variant='contained' onClick={handleSaveWeight}>Save</Button>
+            </>
+          )}
         </div>
         <div style={{ width: '100%', maxWidth: '300px', marginBottom: '20px' }}>
           <StatCard
@@ -86,7 +121,16 @@ function Home() {
           //icon={<FaFireAlt />}
           />
           <Button variant="contained" onClick={handleClickHeight}>Edit</Button>
-          {editModeHeight && <input type="text" />}
+          {editModeHeight && (
+            <>
+              <input
+                type="text"
+                value={heightInput}
+                onChange={(e) => setHeightInput(e.target.value)}
+              />
+              <Button variant='contained' onClick={handleSaveHeight}>Save</Button>
+            </>
+          )}
         </div>
         <div style={{ width: '100%', maxWidth: '300px', marginBottom: '20px' }}>
           <StatCard
