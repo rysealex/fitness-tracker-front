@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
+import Calendar from './calendar';
 import FormControl from '@mui/material/FormControl';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -21,7 +22,8 @@ function EnterInformation() {
   const [lastName, setLastName] = useState("");
   const [height, setHeight] = useState("");
   const [weight, setWeight] = useState("");
-  const [age, setAge] = useState("");
+  //const [age, setAge] = useState("");
+  const [birthDate, setBirthDate] = useState("");
   const [gender, setGender] = useState("");
   // Event handlers to update state variables
   const handleFirstNameChange = (event) => {
@@ -36,8 +38,11 @@ function EnterInformation() {
   const handleWeightChange = (event) => {
     setWeight(event.target.value);
   };
-  const handleAgeChange = (event) => {
+  /*const handleAgeChange = (event) => {
     setAge(event.target.value);
+  };*/
+  const handleBirthDateChange = (newBirthDate) => {
+    setBirthDate(newBirthDate);
   };
   const handleGenderChange = (event) => {
     setGender(event.target.value);
@@ -48,7 +53,8 @@ function EnterInformation() {
       lname: lastName,
       height: height,
       weight: weight,
-      age: age,
+      //age: age,
+      birthday: birthDate,
       gender: gender
     })
       .then(function (response) {
@@ -72,7 +78,8 @@ function EnterInformation() {
           <TextField id="lname" label="Last Name" variant="outlined" onChange={handleLastNameChange} />
           <TextField id="height" label="Height (feet)" variant="outlined" type="number" onChange={handleHeightChange} />
           <TextField id="weight" label="Weight (lbs)" variant="outlined" type="number" onChange={handleWeightChange} />
-          <TextField id="age" label="Age" variant="outlined" type="number" onChange={handleAgeChange} />
+          <Calendar id="birthday" onChange={handleBirthDateChange} />
+          {/* <TextField id="age" label="Age" variant="outlined" type="number" onChange={handleAgeChange} /> */}
           <FormControl fullWidth>
             <InputLabel id="gender-label">Gender</InputLabel>
             <Select labelId="gender-label" id="gender" label="Gender" onChange={handleGenderChange}

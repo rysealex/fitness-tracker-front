@@ -61,18 +61,34 @@ function Home() {
         console.log("Error updating height:", error);
       });
   };
+  // Error checking weight input value
+  const handleWeightInputChange = (e) => {
+    const newValue = e.target.value;
+    if (!isNaN(newValue)) {
+      setWeightInput(newValue);
+    }
+  };
+  // Error checking height input value
+  const handleHeightInputChange = (e) => {
+    const newValue = e.target.value;
+    if (!isNaN(newValue)) {
+      setHeightInput(newValue);
+    }
+  };
   // Fetch user stats
   useEffect(() => {
-    axios.get(`http://127.0.0.1:5000/user/${username}/stats`)
-      .then(function (response) {
-        console.log(response);
-        setStats(response.data);
-        setWeightInput(response.data.weight);
-        setHeightInput(response.data.height);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    if (username) {
+      axios.get(`http://127.0.0.1:5000/user/${username}/stats`)
+        .then(function (response) {
+          console.log(response);
+          setStats(response.data);
+          setWeightInput(response.data.weight);
+          setHeightInput(response.data.height);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
   }, [username])
   return (
     <Container>
@@ -107,7 +123,7 @@ function Home() {
               <input
                 type="text"
                 value={weightInput}
-                onChange={(e) => setWeightInput(e.target.value)}
+                onChange={handleWeightInputChange}
               />
               <Button variant='contained' onClick={handleSaveWeight}>Save</Button>
             </>
@@ -126,7 +142,7 @@ function Home() {
               <input
                 type="text"
                 value={heightInput}
-                onChange={(e) => setHeightInput(e.target.value)}
+                onChange={handleHeightInputChange}
               />
               <Button variant='contained' onClick={handleSaveHeight}>Save</Button>
             </>
