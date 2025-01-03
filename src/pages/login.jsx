@@ -16,16 +16,34 @@ function Login() {
   const [password, setPassword] = useState("");
   const [usernameError, setUsernameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
-
+  const [usernameNoEntry, setUsernameNoEntry] = useState(false);
+  const [passwordNoEntry, setPasswordNoEntry] = useState(false);
+  // Event handlers to update state variables
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
+    setUsernameNoEntry(false);
   };
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
+    setPasswordNoEntry(false);
   };
-  // Event handlers to update state variables
   const handleSubmit = (event) => {
-    setUsernameError(false); // reset usernameError
+    event.preventDefault();
+    // reset errors
+    setUsernameError(false);
+    setPasswordError(false);
+    // check if username is empty
+    if (username === "") {
+      setUsernameNoEntry(true);
+    }
+    // check if password is empty
+    if (password === "") {
+      setPasswordNoEntry(true);
+    }
+    // check if either field is empty, don't continue
+    if (username === "" || password === "") {
+      return;
+    }
     axios.get(`http://127.0.0.1:5000/user/${username}`)
       .then(function (response) {
         console.log(response.data);
@@ -51,28 +69,31 @@ function Login() {
         component="form"
         noValidate
         autoComplete="off"
+        onSubmit={handleSubmit}
       >
         <Stack spacing={2} direction="column" width='25ch'>
           <TextField
-            error={usernameError}
+            error={usernameError || usernameNoEntry}
             id="outlined-basic"
             label="Username"
             variant="outlined"
-            helperText={usernameError && "Username does not exist"}
+            helperText={usernameError ? "Username does not exist" : (usernameNoEntry && "Enter a Username")}
+            value={username}
             onChange={handleUsernameChange}
           />
           <TextField
-            error={passwordError}
+            error={passwordError || passwordNoEntry}
             id="outlined-basic"
             label="Password"
             variant="outlined"
             type="password"
-            helperText={passwordError && "Incorrect password"}
+            helperText={passwordError ? "Incorrect password" : (passwordNoEntry && "Enter a Password")}
+            value={password}
             onChange={handlePasswordChange}
           />
 
           <Stack spacing={2} direction="row">
-            <Button variant="contained" onClick={() => handleSubmit()}>Login</Button>
+            <Button variant="contained" type="submit">Login</Button>
             <Button variant="contained" onClick={() => handleNavigate("/")}>Back</Button>
           </Stack>
         </Stack>

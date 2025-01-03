@@ -10,60 +10,135 @@ import Calendar from '../calendar';
 import FormControl from '@mui/material/FormControl';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { InputLabel } from '@mui/material';
+import { FormHelperText, InputLabel } from '@mui/material';
 
 function EnterInformation() {
   const navigate = useNavigate();
-  const handleNavigate = (url) => {
-    navigate(url);
-  };
   const { username } = useUser();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [height, setHeight] = useState("");
   const [weight, setWeight] = useState("");
-  //const [age, setAge] = useState("");
   const [birthDate, setBirthDate] = useState("");
   const [gender, setGender] = useState("");
+  const [errors, setErrors] = useState({
+    firstName: '',
+    lastName: '',
+    height: '',
+    weight: '',
+    birthDate: '',
+    gender: '',
+  });
   // Event handlers to update state variables
   const handleFirstNameChange = (event) => {
-    setFirstName(event.target.value);
+    const inputFirstName = event.target.value;
+    setFirstName(inputFirstName);
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      firstName: '',
+    }));
   };
   const handleLastNameChange = (event) => {
-    setLastName(event.target.value);
+    const inputLastName = event.target.value;
+    setLastName(inputLastName);
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      lastName: '',
+    }));
   };
   const handleHeightChange = (event) => {
-    setHeight(event.target.value);
+    const inputHeight = event.target.value;
+    setHeight(inputHeight);
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      height: '',
+    }));
   };
   const handleWeightChange = (event) => {
-    setWeight(event.target.value);
+    const inputWeight = event.target.value;
+    setWeight(inputWeight);
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      weight: '',
+    }));
   };
-  /*const handleAgeChange = (event) => {
-    setAge(event.target.value);
-  };*/
-  const handleBirthDateChange = (newBirthDate) => {
-    setBirthDate(newBirthDate);
+  const handleBirthDateChange = (event) => {
+    const inputBirthDate = event;
+    setBirthDate(inputBirthDate);
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      birthDate: '',
+    }));
   };
   const handleGenderChange = (event) => {
-    setGender(event.target.value);
+    const inputGender = event.target.value;
+    setGender(inputGender);
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      gender: '',
+    }));
   };
   const handleSubmit = (event) => {
+    event.preventDefault();
+    let validationErrors = {
+      firstName: '',
+      lastName: '',
+      height: '',
+      weight: '',
+      birthDate: '',
+      gender: '',
+    };
+    // validate fields
+    let isValid = true;
+    // check if no first name
+    if (firstName === "") {
+      validationErrors.firstName = 'Enter your First Name';
+      isValid = false;
+    }
+    // check if no last name
+    if (lastName === "") {
+      validationErrors.lastName = 'Enter your Last Name';
+      isValid = false;
+    }
+    // check if no height
+    if (height === "") {
+      validationErrors.height = 'Enter your Height';
+      isValid = false;
+    }
+    // check if no weight
+    if (weight === "") {
+      validationErrors.weight = 'Enter your Weight';
+      isValid = false;
+    }
+    // check if no birth date
+    if (birthDate === "") {
+      validationErrors.birthDate = 'Enter your Birthday';
+      isValid = false;
+    }
+    // check if no gender
+    if (gender === "") {
+      validationErrors.gender = 'Enter your Gender';
+      isValid = false;
+    }
+    if (!isValid) {
+      setErrors(validationErrors);
+      return;
+    }
     axios.post(`http://127.0.0.1:5000/user/${username}/stats`, {
       fname: firstName,
       lname: lastName,
       height: height,
       weight: weight,
-      //age: age,
       birthday: birthDate,
-      gender: gender
+      gender: gender,
     })
       .then(function (response) {
         console.log(response);
+        navigate('/home');
       })
       .catch(function (error) {
         console.log(error);
       });
-    handleNavigate("/home");
   };
   return (
     <>
@@ -72,25 +147,70 @@ function EnterInformation() {
         component="form"
         noValidate
         autoComplete="off"
+        onSubmit={handleSubmit}
       >
         <Stack spacing={2} direction="column" width='25ch'>
-          <TextField id="fname" label="First Name" variant="outlined" onChange={handleFirstNameChange} />
-          <TextField id="lname" label="Last Name" variant="outlined" onChange={handleLastNameChange} />
-          <TextField id="height" label="Height (feet)" variant="outlined" type="number" onChange={handleHeightChange} />
-          <TextField id="weight" label="Weight (lbs)" variant="outlined" type="number" onChange={handleWeightChange} />
-          <Calendar id="birthday" onChange={handleBirthDateChange} />
-          {/* <TextField id="age" label="Age" variant="outlined" type="number" onChange={handleAgeChange} /> */}
-          <FormControl fullWidth>
-            <InputLabel id="gender-label">Gender</InputLabel>
-            <Select labelId="gender-label" id="gender" label="Gender" onChange={handleGenderChange}
+          <TextField
+            error={!!errors.firstName}
+            id="fname"
+            label="First Name"
+            variant="outlined"
+            helperText={errors.firstName}
+            onChange={handleFirstNameChange}
+          />
+          <TextField
+            error={!!errors.lastName}
+            id="lname"
+            label="Last Name"
+            variant="outlined"
+            helperText={errors.lastName}
+            onChange={handleLastNameChange}
+          />
+          <TextField
+            error={!!errors.height}
+            id="height"
+            label="Height (feet)"
+            variant="outlined"
+            type="number"
+            helperText={errors.height}
+            onChange={handleHeightChange}
+          />
+          <TextField
+            error={!!errors.weight}
+            id="weight"
+            label="Weight (lbs)"
+            variant="outlined"
+            type="number"
+            helperText={errors.weight}
+            onChange={handleWeightChange}
+          />
+          <Calendar
+            error={!!errors.birthDate}
+            id="birthday"
+            helperText={errors.birthDate}
+            onChange={handleBirthDateChange}
+          />
+          <FormControl fullWidth error={!!errors.gender}>
+            <InputLabel
+              id="gender-label"
+            >
+              Gender
+            </InputLabel>
+            <Select
+              labelId="gender-label"
+              id="gender"
+              label="Gender"
+              value={gender}
+              onChange={handleGenderChange}
             >
               <MenuItem value={"Male"}>Male</MenuItem>
               <MenuItem value={"Female"}>Female</MenuItem>
               <MenuItem value={"Other"}>Other</MenuItem>
             </Select>
+            {errors.gender && <FormHelperText>{errors.gender}</FormHelperText>}
           </FormControl>
           <Stack spacing={2} direction="row">
-            <Button variant="contained" onClick={() => handleSubmit()}>Continue</Button>
+            <Button variant="contained" type="submit">Continue</Button>
           </Stack>
         </Stack>
       </Box>

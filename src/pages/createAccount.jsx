@@ -15,23 +15,60 @@ function CreateAccount() {
   const { username, setUsername } = useUser();
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
-  const [errorFlag, setErrorFlag] = useState(false);
+  const [matchErrorFlag, setMatchErrorFlag] = useState(false);
+  const [usernameErrorFlag, setUsernameErrorFlag] = useState(false);
+  const [passwordErrorFlag, setPasswordErrorFlag] = useState(false);
   // Event handlers to update state variables
   const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
+    const inputUsername = event.target.value;
+    setUsername(inputUsername);
+    if (inputUsername !== "") {
+      setUsernameErrorFlag(false);
+    }
   };
   const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
+    const inputPassword = event.target.value;
+    setPassword(inputPassword);
+    if (inputPassword !== "") {
+      setPasswordErrorFlag(false);
+    }
   };
   const handlePassword2Change = (event) => {
-    setPassword2(event.target.value);
+    const inputPassword2 = event.target.value;
+    setPassword2(inputPassword2);
+    if (inputPassword2 !== "") {
+      setMatchErrorFlag(false);
+    }
   };
   const handleSubmit = (event) => {
+    event.preventDefault();
+    // reset the error flags before checking
+    setUsernameErrorFlag(false);
+    setPasswordErrorFlag(false);
+    setMatchErrorFlag(false);
+    // validate fields
+    let isValid = true;
+    // check if no username
+    if (username === "") {
+      setUsernameErrorFlag(true);
+      isValid = false;
+    }
+    // check if no password
+    if (password === "") {
+      setPasswordErrorFlag(true);
+      isValid = false;
+    }
     // check if passwords do not match
     if (password !== password2) {
-      setErrorFlag(true); // flip errorFlag
+      setMatchErrorFlag(true); // flip errorFlag
+      isValid = false;
     }
-    else {
+    // check if re-type password textfield is emtpy
+    if (password2 === "") {
+      setMatchErrorFlag(true);
+      isValid = false;
+    }
+    if (isValid) {
       axios.post("http://127.0.0.1:5000/user", {
         username: username,
         password: password
@@ -52,21 +89,38 @@ function CreateAccount() {
         component="form"
         noValidate
         autoComplete="off"
+        onSubmit={handleSubmit}
       >
         <Stack spacing={2} direction="column" width='25ch'>
-          <TextField id="outlined-basic" label="Username" variant="outlined" onChange={handleUsernameChange} />
-          <TextField id="outlined-basic" label="Password" variant="outlined" type="password" onChange={handlePasswordChange} />
           <TextField
-            error={errorFlag}
+            error={usernameErrorFlag}
+            id="outlined-basic"
+            label="Username"
+            variant="outlined"
+            helperText={usernameErrorFlag && "Enter a Username"}
+            onChange={handleUsernameChange}
+          />
+          <TextField
+            error={passwordErrorFlag}
+            id="outlined-basic"
+            label="Password"
+            variant="outlined"
+            type="password"
+            helperText={passwordErrorFlag && "Enter a Password"}
+            onChange={handlePasswordChange}
+          />
+          <TextField
+            error={matchErrorFlag}
             id="outlined-basic"
             label="Re-type Password"
             variant="outlined"
             type="password"
-            helperText={errorFlag && "Passwords don't match"}
-            onChange={handlePassword2Change} />
+            helperText={matchErrorFlag && "Passwords don't match"}
+            onChange={handlePassword2Change}
+          />
 
           <Stack spacing={2} direction="row">
-            <Button variant="contained" onClick={() => handleSubmit()}>Create</Button>
+            <Button variant="contained" type="submit">Create</Button>
             <Button variant="contained" onClick={() => handleNavigate("/")}>Back</Button>
           </Stack>
         </Stack>
