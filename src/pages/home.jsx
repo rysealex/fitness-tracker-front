@@ -40,7 +40,14 @@ function Home() {
     })
       .then(response => {
         console.log("Weight updated successfully:", response.data);
-        setEditModeWeight(false);
+        axios.get(`http://127.0.0.1:5000/user/${username}/stats`)
+          .then(function (response) {
+            setStats(response.data); // Ensure we have the latest stats
+            setEditModeWeight(false);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
       })
       .catch(error => {
         console.log("Error updating weight:", error);
@@ -55,7 +62,14 @@ function Home() {
     })
       .then(response => {
         console.log("Height updated successfully:", response.data);
-        setEditModeHeight(false);
+        axios.get(`http://127.0.0.1:5000/user/${username}/stats`)
+          .then(function (response) {
+            setStats(response.data); // Ensure we have the latest stats
+            setEditModeHeight(false);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
       })
       .catch(error => {
         console.log("Error updating height:", error);

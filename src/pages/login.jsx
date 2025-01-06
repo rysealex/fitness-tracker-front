@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useUser } from '../userContext';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -18,6 +18,12 @@ function Login() {
   const [passwordError, setPasswordError] = useState(false);
   const [usernameNoEntry, setUsernameNoEntry] = useState(false);
   const [passwordNoEntry, setPasswordNoEntry] = useState(false);
+  // Reset the username on component unmount
+  useEffect(() => {
+    return () => {
+      setUsername(""); // reset username here
+    };
+  }, [setUsername]);
   // Event handlers to update state variables
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
@@ -40,18 +46,18 @@ function Login() {
     if (password === "") {
       setPasswordNoEntry(true);
     }
-    // check if either field is empty, don't continue
-    if (username === "" || password === "") {
+    // check if both fields are empty, don't continue
+    if (username === "" && password === "") {
       return;
     }
     axios.get(`http://127.0.0.1:5000/user/${username}`)
       .then(function (response) {
-        console.log(response.data);
         // check if password is incorrect
         if (password !== response.data) {
           setPasswordError(true); // flip passwordError
         }
         else {
+          setUsername(username); // set the username in the context
           handleNavigate('/home');
         }
 
