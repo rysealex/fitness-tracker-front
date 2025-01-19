@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import '../styles/createAccount.css'
 
 function CreateAccount() {
   const navigate = useNavigate();
@@ -84,47 +85,52 @@ function CreateAccount() {
   };
   return (
     <>
-      <h1>Create Account</h1>
-      <Box
-        component="form"
-        noValidate
-        autoComplete="off"
-        onSubmit={handleSubmit}
-      >
-        <Stack spacing={2} direction="column" width='25ch'>
-          <TextField
-            error={usernameErrorFlag}
-            id="outlined-basic"
-            label="Username"
-            variant="outlined"
-            helperText={usernameErrorFlag && "Enter a Username"}
-            onChange={handleUsernameChange}
-          />
-          <TextField
-            error={passwordErrorFlag}
-            id="outlined-basic"
-            label="Password"
-            variant="outlined"
-            type="password"
-            helperText={passwordErrorFlag && "Enter a Password"}
-            onChange={handlePasswordChange}
-          />
-          <TextField
-            error={matchErrorFlag}
-            id="outlined-basic"
-            label="Re-type Password"
-            variant="outlined"
-            type="password"
-            helperText={matchErrorFlag && "Passwords don't match"}
-            onChange={handlePassword2Change}
-          />
+      <div className='create-account-container'>
+        <h1>Create Account</h1>
+        <Box
+          component="form"
+          noValidate
+          autoComplete="off"
+          onSubmit={handleSubmit}
+        >
+          <Stack spacing={2} direction="column" width='25ch'>
+            <TextField
+              className='textfield'
+              error={usernameErrorFlag}
+              id="outlined-basic"
+              label="Username"
+              variant="outlined"
+              helperText={usernameErrorFlag && "Enter a Username"}
+              onChange={handleUsernameChange}
+            />
+            <TextField
+              className='textfield'
+              error={passwordErrorFlag}
+              id="outlined-basic"
+              label="Password"
+              variant="outlined"
+              type="password"
+              helperText={passwordErrorFlag && "Enter a Password"}
+              onChange={handlePasswordChange}
+            />
+            <TextField
+              className='textfield'
+              error={matchErrorFlag}
+              id="outlined-basic"
+              label="Re-type Password"
+              variant="outlined"
+              type="password"
+              helperText={matchErrorFlag && "Passwords don't match"}
+              onChange={handlePassword2Change}
+            />
 
-          <Stack spacing={2} direction="row">
-            <Button variant="contained" type="submit">Create</Button>
-            <Button variant="contained" onClick={() => handleNavigate("/")}>Back</Button>
+            <Stack className='button-container' spacing={2} direction="row">
+              <Button variant="contained" type="submit">Create</Button>
+              <Button variant="contained" onClick={() => handleNavigate("/")}>Back</Button>
+            </Stack>
           </Stack>
-        </Stack>
-      </Box>
+        </Box>
+      </div>
     </>
   );
 };

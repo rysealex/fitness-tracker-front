@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import '../styles/login.css'
 
 function Login() {
   const navigate = useNavigate();
@@ -70,40 +71,44 @@ function Login() {
   };
   return (
     <>
-      <h1>Login</h1>
-      <Box
-        component="form"
-        noValidate
-        autoComplete="off"
-        onSubmit={handleSubmit}
-      >
-        <Stack spacing={2} direction="column" width='25ch'>
-          <TextField
-            error={usernameError || usernameNoEntry}
-            id="outlined-basic"
-            label="Username"
-            variant="outlined"
-            helperText={usernameError ? "Username does not exist" : (usernameNoEntry && "Enter a Username")}
-            value={username}
-            onChange={handleUsernameChange}
-          />
-          <TextField
-            error={passwordError || passwordNoEntry}
-            id="outlined-basic"
-            label="Password"
-            variant="outlined"
-            type="password"
-            helperText={passwordError ? "Incorrect password" : (passwordNoEntry && "Enter a Password")}
-            value={password}
-            onChange={handlePasswordChange}
-          />
+      <div className='login-container'>
+        <h1>Login</h1>
+        <Box
+          component="form"
+          noValidate
+          autoComplete="off"
+          onSubmit={handleSubmit}
+        >
+          <Stack spacing={2} direction="column" width='25ch'>
+            <TextField
+              className='textfield'
+              error={usernameError || usernameNoEntry}
+              id="outlined-basic"
+              label="Username"
+              variant="outlined"
+              helperText={usernameError ? "Username does not exist" : (usernameNoEntry && "Enter a Username")}
+              value={username}
+              onChange={handleUsernameChange}
+            />
+            <TextField
+              className='textfield'
+              error={passwordError || passwordNoEntry}
+              id="outlined-basic"
+              label="Password"
+              variant="outlined"
+              type="password"
+              helperText={passwordError ? "Incorrect password" : (passwordNoEntry && "Enter a Password")}
+              value={password}
+              onChange={handlePasswordChange}
+            />
 
-          <Stack spacing={2} direction="row">
-            <Button variant="contained" type="submit">Login</Button>
-            <Button variant="contained" onClick={() => handleNavigate("/")}>Back</Button>
+            <Stack className='button-container' spacing={2} direction="row">
+              <Button variant="contained" type="submit">Login</Button>
+              <Button variant="contained" onClick={() => handleNavigate("/")}>Back</Button>
+            </Stack>
           </Stack>
-        </Stack>
-      </Box>
+        </Box>
+      </div>
     </>
   );
 };

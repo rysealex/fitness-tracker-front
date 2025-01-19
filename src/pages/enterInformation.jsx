@@ -11,6 +11,7 @@ import FormControl from '@mui/material/FormControl';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { FormHelperText, InputLabel } from '@mui/material';
+import '../styles/enterInformation.css'
 
 function EnterInformation() {
   const navigate = useNavigate();
@@ -142,78 +143,86 @@ function EnterInformation() {
   };
   return (
     <>
-      <h1>Enter Information</h1>
-      <Box
-        component="form"
-        noValidate
-        autoComplete="off"
-        onSubmit={handleSubmit}
-      >
-        <Stack spacing={2} direction="column" width='25ch'>
-          <TextField
-            error={!!errors.firstName}
-            id="fname"
-            label="First Name"
-            variant="outlined"
-            helperText={errors.firstName}
-            onChange={handleFirstNameChange}
-          />
-          <TextField
-            error={!!errors.lastName}
-            id="lname"
-            label="Last Name"
-            variant="outlined"
-            helperText={errors.lastName}
-            onChange={handleLastNameChange}
-          />
-          <TextField
-            error={!!errors.height}
-            id="height"
-            label="Height (feet)"
-            variant="outlined"
-            type="number"
-            helperText={errors.height}
-            onChange={handleHeightChange}
-          />
-          <TextField
-            error={!!errors.weight}
-            id="weight"
-            label="Weight (lbs)"
-            variant="outlined"
-            type="number"
-            helperText={errors.weight}
-            onChange={handleWeightChange}
-          />
-          <Calendar
-            error={!!errors.birthDate}
-            id="birthday"
-            helperText={errors.birthDate}
-            onChange={handleBirthDateChange}
-          />
-          <FormControl fullWidth error={!!errors.gender}>
-            <InputLabel
-              id="gender-label"
-            >
-              Gender
-            </InputLabel>
-            <Select
-              labelId="gender-label"
-              id="gender"
-              label="Gender"
-              value={gender}
-              onChange={handleGenderChange}
-            >
-              <MenuItem value={"Male"}>Male</MenuItem>
-              <MenuItem value={"Female"}>Female</MenuItem>
-              <MenuItem value={"Other"}>Other</MenuItem>
-            </Select>
-            {errors.gender && <FormHelperText>{errors.gender}</FormHelperText>}
-          </FormControl>
-          <Stack spacing={2} direction="row">
-            <Button variant="contained" type="submit">Continue</Button>
+      <div className='enter-information-container'>
+        <h1>Enter Information</h1>
+        <Box
+          component="form"
+          noValidate
+          autoComplete="off"
+          onSubmit={handleSubmit}
+        >
+          <Stack spacing={2} direction="column" width='25ch'>
+            <TextField
+              className='textfield'
+              error={!!errors.firstName}
+              id="fname"
+              label="First Name"
+              variant="outlined"
+              helperText={errors.firstName}
+              onChange={handleFirstNameChange}
+            />
+            <TextField
+              className='textfield'
+              error={!!errors.lastName}
+              id="lname"
+              label="Last Name"
+              variant="outlined"
+              helperText={errors.lastName}
+              onChange={handleLastNameChange}
+            />
+            <TextField
+              className='textfield'
+              error={!!errors.height}
+              id="height"
+              label="Height (feet)"
+              variant="outlined"
+              type="number"
+              helperText={errors.height}
+              onChange={handleHeightChange}
+            />
+            <TextField
+              className='textfield'
+              error={!!errors.weight}
+              id="weight"
+              label="Weight (lbs)"
+              variant="outlined"
+              type="number"
+              helperText={errors.weight}
+              onChange={handleWeightChange}
+            />
+            <Calendar
+              className='textfield'
+              error={!!errors.birthDate}
+              id="birthday"
+              helperText={errors.birthDate}
+              onChange={handleBirthDateChange}
+            />
+            <FormControl className='textfield' fullWidth error={!!errors.gender}>
+              <InputLabel
+                id="gender-label"
+              >
+                Gender
+              </InputLabel>
+              <Select
+                className='textfield'
+                labelId="gender-label"
+                id="gender"
+                label="Gender"
+                value={gender}
+                onChange={handleGenderChange}
+              >
+                <MenuItem value={"Male"}>Male</MenuItem>
+                <MenuItem value={"Female"}>Female</MenuItem>
+                <MenuItem value={"Other"}>Other</MenuItem>
+              </Select>
+              {errors.gender && <FormHelperText>{errors.gender}</FormHelperText>}
+            </FormControl>
+            <Stack className='button-container' spacing={2} direction="row">
+              <Button variant="contained" type="submit">Continue</Button>
+            </Stack>
           </Stack>
-        </Stack>
-      </Box>
+        </Box>
+      </div>
     </>
   );
 }
