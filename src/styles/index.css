@@ -1,0 +1,89 @@
+/* Styles for the body elements */
+body {
+    background-image: linear-gradient(to right, lightgrey, grey);
+    font-family: 'kanit', sans-serif;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+h1, h2 {
+    text-align: center;
+}
+
+/* Styles for the welcome page */
+.welcome-container {
+    text-align: center;
+    flex-grow: 1;
+}
+.button-container {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+}
+.log-in {
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: gray;
+}
+.create-account {
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+/* Styles for the home page */
+
+/* Profile Image Styles */
+.profile-collapsable {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    text-align: left;
+    z-index: 1;
+}
+.profile-collapsable ul {
+    list-style-type: none;  
+    position: relative;
+    padding: 0;
+    margin: 0;
+}
+.profile-collapsable ul li {
+    padding: 8px;
+    text-align: center; 
+}
+.profile-image {
+    cursor: pointer;
+    margin-right: 15px;
+}
+.profile-username {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.profile-username h3, .profile-username h4 {
+    margin: 0;
+    padding: 0;
+}
+.profile-stats {
+    display: none;
+    position: absolute;
+    top: 70px;
+    padding: 15px;
+    border: solid black;
+    width: 150px;
+}
+.profile-stats.visible {
+    display: block;
+}
+.profile-stats ul li {
+    padding: 8px;
+    text-align: left;
+}

@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import StatCard from '../statCard';
 import CurrentDate from '../currentDate';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 function Home() {
   const navigate = useNavigate();
@@ -16,6 +18,7 @@ function Home() {
   const [stats, setStats] = useState({});
   const [weightInput, setWeightInput] = useState(stats.weight);
   const [heightInput, setHeightInput] = useState(stats.height);
+  const [profileVisible, setProfileVisible] = useState(false);
   // Event handler for sign out button
   const handleSignOut = (event) => {
     setUsername("");
@@ -89,6 +92,9 @@ function Home() {
       setHeightInput(newValue);
     }
   };
+  const handleProfileClick = () => {
+    setProfileVisible(!profileVisible);
+  };
   // Fetch user stats
   useEffect(() => {
     if (username) {
@@ -105,7 +111,29 @@ function Home() {
     }
   }, [username])
   return (
-    <Container>
+    <div>
+      <aside className='profile-collapsable'>
+        <div className='profile-image' onClick={handleProfileClick}>
+          <FontAwesomeIcon icon={faUser} size="3x" color="white" />
+        </div>
+        <div className='profile-username'>
+          <h3>{stats.fname} {stats.lname}</h3>
+          <h4>{`${username}`}</h4>
+        </div>
+        <div className={`profile-stats ${profileVisible ? 'visible' : ''}`}>
+          <ul>
+            <li>{stats.gender}</li>
+            <li>{stats.age} yrs</li>
+            <li>
+              {stats.weight} lbs
+            </li>
+            <li>
+              {stats.height} ft
+            </li>
+          </ul>
+        </div>
+      </aside>
+      <Container>
       {/* Flexbox container for stat cards */}
       <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
         <div style={{ width: '100%', maxWidth: '300px', marginBottom: '20px' }}>
@@ -180,7 +208,8 @@ function Home() {
         </div>
       </div>
       <Button variant="contained" onClick={() => handleSignOut()}>Sign Out</Button>
-    </Container>
+      </Container>
+    </div>
   )
 };
 

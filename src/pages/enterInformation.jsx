@@ -11,7 +11,6 @@ import FormControl from '@mui/material/FormControl';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { FormHelperText, InputLabel } from '@mui/material';
-import '../styles/enterInformation.css'
 
 function EnterInformation() {
   const navigate = useNavigate();
