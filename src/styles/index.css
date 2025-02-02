@@ -59,6 +59,25 @@ h1, h2 {
     padding: 8px;
     text-align: center; 
 }
+.profile-image-container {
+    position: relative;
+    width: 75px;
+    height: 75px;
+    background-color: black;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid black;
+}
+.profile-image-container img,
+.profile-image img {
+    max-width: 75px;
+    max-height: 75px;
+    object-fit: cover;
+    border-radius: 50%;
+}
 .profile-image {
     cursor: pointer;
     margin-right: 15px;
@@ -67,6 +86,7 @@ h1, h2 {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    gap: 5px;
 }
 .profile-username h3, .profile-username h4 {
     margin: 0;
@@ -77,14 +97,23 @@ h1, h2 {
     position: absolute;
     top: 70px;
     padding: 15px;
+    margin-top: 30px;
     border: solid black;
     width: 150px;
     z-index: 2;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 .profile-stats.visible {
-    display: block;
+    display: flex;
 }
 .profile-stats ul li {
     padding: 8px;
     text-align: left;
+}
+.profile-stats button {
+    width: 100px;
+    padding: 10px;
 }

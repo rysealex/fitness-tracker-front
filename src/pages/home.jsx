@@ -20,6 +20,7 @@ function Home() {
   const [heightInput, setHeightInput] = useState(stats.height);
   const [profileVisible, setProfileVisible] = useState(false);
   const [profilePicture, setProfilePicture] = useState(null);
+  const [previewPicture, setPreviewPicture] = useState(null);
   // Event handler for sign out button
   const handleSignOut = (event) => {
     setUsername("");
@@ -99,16 +100,16 @@ function Home() {
     if (file) {
       const fileType = file.type.split("/")[0];
       if (fileType === "image") {
-        setProfilePicture(file);
+        setPreviewPicture(file);
       } else {
         alert("Please select a valid image file.");
       }
     }
   };
   const handleSaveProfilePicture = () => {
-    if (profilePicture) {
+    if (previewPicture) {
         const formData = new FormData();
-        formData.append('file', profilePicture);
+        formData.append('file', previewPicture);
 
         axios.put(`http://127.0.0.1:5000/user/${username}/profile-pic`, formData, {
             headers: {
@@ -118,7 +119,8 @@ function Home() {
         .then(response => {
             console.log("Profile picture updated successfully:", response.data);
             const imageUrl = response.data.profile_pic;
-            setProfilePicture(imageUrl);  // Update the state with new profile picture URL
+            setProfilePicture(`http://127.0.0.1:5000${imageUrl}`);  // Update the state with new profile picture URL
+            setPreviewPicture(null); // Reset the preview image
             axios.get(`http://127.0.0.1:5000/user/${username}/stats`)
                 .then(response => {
                     setStats(response.data);
@@ -159,11 +161,17 @@ function Home() {
     <div>
       <aside className='profile-collapsable'>
         <div className='profile-image' onClick={handleProfilePicClick}>
-          {profilePicture ? (
-            <img src={`http://127.0.0.1:5000${profilePicture}`} alt="Profile-pic" />
-          ) : (
-            <FontAwesomeIcon icon={faUser} size="3x" color="white" />
-          )}
+          <div className='profile-image-container'>
+            {previewPicture ? (
+              <img src={URL.createObjectURL(previewPicture)} alt="Profile-pic" />
+            ) : (
+              profilePicture ? (
+                <img src={`http://127.0.0.1:5000${profilePicture}`} alt="Profile-pic" />
+              ) : (
+                <FontAwesomeIcon icon={faUser} size="3x" />
+              )
+            )}
+          </div>
         </div>
         <div className='profile-username'>
           <h3>{stats.fname} {stats.lname}</h3>
@@ -184,10 +192,20 @@ function Home() {
                 accept="image/*"
                 onChange={handlePictureChange}
               />
-              {profilePicture && (
-                <div>
-                  <img src={profilePicture} alt="Profile-pic-preview" />
-                  <Button variant='contained' onClick={handleSaveProfilePicture}>Save</Button>
+              {previewPicture && (
+                <div className='profile-stats'>
+                  <div className='profile-image-container'>
+                    <img 
+                      src={URL.createObjectURL(previewPicture)} 
+                      alt="Profile-pic-preview" 
+                    />
+                  </div>
+                  <Button 
+                    variant='contained' 
+                    onClick={handleSaveProfilePicture}
+                  >
+                    Save
+                  </Button>
                 </div>
               )}
             </div>
