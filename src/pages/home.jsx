@@ -19,6 +19,7 @@ function Home() {
   const [weightInput, setWeightInput] = useState(stats.weight);
   const [heightInput, setHeightInput] = useState(stats.height);
   const [profileVisible, setProfileVisible] = useState(false);
+  const [profilePicture, setProfilePicture] = useState(null);
   // Event handler for sign out button
   const handleSignOut = (event) => {
     setUsername("");
@@ -92,8 +93,51 @@ function Home() {
       setHeightInput(newValue);
     }
   };
-  const handleProfileClick = () => {
-    setProfileVisible(!profileVisible);
+  // handle profile picture upload
+  const handlePictureChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const fileType = file.type.split("/")[0];
+      if (fileType === "image") {
+        setProfilePicture(file);
+      } else {
+        alert("Please select a valid image file.");
+      }
+    }
+  };
+  const handleSaveProfilePicture = () => {
+    if (profilePicture) {
+        const formData = new FormData();
+        formData.append('file', profilePicture);
+
+        axios.put(`http://127.0.0.1:5000/user/${username}/profile-pic`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        })
+        .then(response => {
+            console.log("Profile picture updated successfully:", response.data);
+            const imageUrl = response.data.profile_pic;
+            setProfilePicture(imageUrl);  // Update the state with new profile picture URL
+            axios.get(`http://127.0.0.1:5000/user/${username}/stats`)
+                .then(response => {
+                    setStats(response.data);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        })
+        .catch(error => {
+            console.log("Error updating profile picture:", error);
+        });
+    }
+};
+  const handleProfilePicClick = () => {
+    setProfileVisible(prevVisible => {
+      const newVisible = !prevVisible;
+      console.log("Profile picture clicked. New profileVisible:", newVisible);
+      return newVisible;
+    });
   };
   // Fetch user stats
   useEffect(() => {
@@ -104,6 +148,7 @@ function Home() {
           setStats(response.data);
           setWeightInput(response.data.weight);
           setHeightInput(response.data.height);
+          setProfilePicture(response.data.profile_pic);
         })
         .catch(function (error) {
           console.log(error);
@@ -113,25 +158,41 @@ function Home() {
   return (
     <div>
       <aside className='profile-collapsable'>
-        <div className='profile-image' onClick={handleProfileClick}>
-          <FontAwesomeIcon icon={faUser} size="3x" color="white" />
+        <div className='profile-image' onClick={handleProfilePicClick}>
+          {profilePicture ? (
+            <img src={`http://127.0.0.1:5000${profilePicture}`} alt="Profile-pic" />
+          ) : (
+            <FontAwesomeIcon icon={faUser} size="3x" color="white" />
+          )}
         </div>
         <div className='profile-username'>
           <h3>{stats.fname} {stats.lname}</h3>
           <h4>{`${username}`}</h4>
         </div>
-        <div className={`profile-stats ${profileVisible ? 'visible' : ''}`}>
-          <ul>
-            <li>{stats.gender}</li>
-            <li>{stats.age} yrs</li>
-            <li>
-              {stats.weight} lbs
-            </li>
-            <li>
-              {stats.height} ft
-            </li>
-          </ul>
-        </div>
+        {profileVisible && (
+          <div className={`profile-stats ${profileVisible ? 'visible' : ''}`}>
+            {console.log("profile stats rednered")}
+            <ul>
+              <li>{stats.gender}</li>
+              <li>{stats.age} yrs</li>
+              <li>{stats.weight} lbs</li>
+              <li>{stats.height} ft</li>
+            </ul>
+            <div>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handlePictureChange}
+              />
+              {profilePicture && (
+                <div>
+                  <img src={profilePicture} alt="Profile-pic-preview" />
+                  <Button variant='contained' onClick={handleSaveProfilePicture}>Save</Button>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </aside>
       <Container>
       {/* Flexbox container for stat cards */}

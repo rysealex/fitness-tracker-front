@@ -79,6 +79,7 @@ h1, h2 {
     padding: 15px;
     border: solid black;
     width: 150px;
+    z-index: 2;
 }
 .profile-stats.visible {
     display: block;
