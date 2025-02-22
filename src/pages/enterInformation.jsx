@@ -142,7 +142,112 @@ function EnterInformation() {
   };
   return (
     <>
-      <div className='enter-information-container'>
+      <div class="enter-info-container">
+        <div class="enter-info-box">
+          <h2>Enter Information</h2>
+            <form noValidate onSubmit={handleSubmit}>
+              <TextField
+                className='textfield'
+                error={!!errors.firstName}
+                id="fname"
+                label="First Name"
+                variant="outlined"
+                helperText={errors.firstName}
+                onChange={handleFirstNameChange}
+                style={{padding: '10px',
+                  marginTop: '25px',
+                  border: 'none',
+                  borderRadius: '10px',
+                  background: 'transparent',
+                  border: '1px solid #fff',
+                  color: '#fff',
+                  fontSize: '13px'}}
+              />
+              <TextField
+                className='textfield'
+                error={!!errors.lastName}
+                id="lname"
+                label="Last Name"
+                variant="outlined"
+                helperText={errors.lastName}
+                onChange={handleLastNameChange}
+                style={{padding: '10px',
+                  marginTop: '25px',
+                  border: 'none',
+                  borderRadius: '10px',
+                  background: 'transparent',
+                  border: '1px solid #fff',
+                  color: '#fff',
+                  fontSize: '13px'}}
+              />
+              <TextField
+                className='textfield'
+                error={!!errors.height}
+                id="height"
+                label="Height (feet)"
+                variant="outlined"
+                type="number"
+                helperText={errors.height}
+                onChange={handleHeightChange}
+                style={{padding: '10px',
+                  marginTop: '25px',
+                  border: 'none',
+                  borderRadius: '10px',
+                  background: 'transparent',
+                  border: '1px solid #fff',
+                  color: '#fff',
+                  fontSize: '13px'}}
+              />
+              <TextField
+                className='textfield'
+                error={!!errors.weight}
+                id="weight"
+                label="Weight (lbs)"
+                variant="outlined"
+                type="number"
+                helperText={errors.weight}
+                onChange={handleWeightChange}
+                style={{padding: '10px',
+                  marginTop: '25px',
+                  border: 'none',
+                  borderRadius: '10px',
+                  background: 'transparent',
+                  border: '1px solid #fff',
+                  color: '#fff',
+                  fontSize: '13px'}}
+              />
+              <Calendar
+                className='textfield'
+                error={!!errors.birthDate}
+                id="birthday"
+                helperText={errors.birthDate}
+                onChange={handleBirthDateChange}
+              />
+              <FormControl className='textfield' fullWidth error={!!errors.gender}>
+                <InputLabel
+                  id="gender-label"
+                >
+                  Gender
+                </InputLabel>
+                <Select
+                  className='textfield'
+                  labelId="gender-label"
+                  id="gender"
+                  label="Gender"
+                  value={gender}
+                  onChange={handleGenderChange}
+                >
+                  <MenuItem value={"Male"}>Male</MenuItem>
+                  <MenuItem value={"Female"}>Female</MenuItem>
+                  <MenuItem value={"Other"}>Other</MenuItem>
+                </Select>
+                {errors.gender && <FormHelperText>{errors.gender}</FormHelperText>}
+              </FormControl>
+              <Button variant="contained" type="submit">Continue</Button>
+            </form>
+        </div>
+      </div>
+      {/*<div className='enter-information-container'>
         <h1>Enter Information</h1>
         <Box
           component="form"
@@ -221,7 +326,7 @@ function EnterInformation() {
             </Stack>
           </Stack>
         </Box>
-      </div>
+      </div>*/}
     </>
   );
 }

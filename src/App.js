@@ -4,6 +4,7 @@ import Login from "./pages/login"
 import CreateAccount from "./pages/createAccount"
 import Home from "./pages/home"
 import EnterInformation from "./pages/enterInformation"
+import Stats from "./pages/stats"
 import './App.css';
 import React from 'react';
 
@@ -18,6 +19,7 @@ function App() {
         <Route path="/create-account" element={<CreateAccount />} />
         <Route path="/home" element={<Home />} />
         <Route path="/enter-info" element={<EnterInformation />} />
+        <Route path="/stats" element={<Stats />} />
       </Routes>
     </Router>
   )

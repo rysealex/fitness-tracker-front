@@ -84,7 +84,74 @@ function CreateAccount() {
   };
   return (
     <>
-      <div className='create-account-container'>
+      <div class="register-container">
+        <div class="register-box">
+          <h2>Register</h2>
+            <form onSubmit={handleSubmit}>
+              <TextField
+                className='textfield'
+                error={usernameErrorFlag}
+                id="outlined-basic"
+                label="Username"
+                variant="outlined"
+                helperText={usernameErrorFlag && "Enter a Username"}
+                onChange={handleUsernameChange}
+                style={{padding: '10px',
+                  marginTop: '25px',
+                  border: 'none',
+                  borderRadius: '10px',
+                  background: 'transparent',
+                  border: '1px solid #fff',
+                  color: '#fff',
+                  fontSize: '13px'}}
+              />
+              <TextField
+                className='textfield'
+                error={passwordErrorFlag}
+                id="outlined-basic"
+                label="Password"
+                variant="outlined"
+                type="password"
+                helperText={passwordErrorFlag && "Enter a Password"}
+                onChange={handlePasswordChange}
+                style={{padding: '10px',
+                  marginTop: '25px',
+                  border: 'none',
+                  borderRadius: '10px',
+                  background: 'transparent',
+                  border: '1px solid #fff',
+                  color: '#fff',
+                  fontSize: '13px'}}
+              />
+              <TextField
+                className='textfield'
+                error={matchErrorFlag}
+                id="outlined-basic"
+                label="Re-type Password"
+                variant="outlined"
+                type="password"
+                helperText={matchErrorFlag && "Passwords don't match"}
+                onChange={handlePassword2Change}
+                style={{padding: '10px',
+                  marginTop: '25px',
+                  border: 'none',
+                  borderRadius: '10px',
+                  background: 'transparent',
+                  border: '1px solid #fff',
+                  color: '#fff',
+                  fontSize: '13px'}}
+              />
+            <Button 
+              variant="contained" 
+              type="submit"
+              style={{marginTop: '15px'
+              }}>
+                Create
+            </Button>
+          </form>
+        </div>
+      </div>
+      {/*<div className='create-account-container'>
         <h1>Create Account</h1>
         <Box
           component="form"
@@ -129,7 +196,7 @@ function CreateAccount() {
             </Stack>
           </Stack>
         </Box>
-      </div>
+      </div>*/}
     </>
   );
 };

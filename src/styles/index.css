@@ -26,9 +26,142 @@ h1, h2 {
     font-family: 'kanit', sans-serif;
 }
 body {
-    min-height: 100vh;
-    background: #d2d2d2;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url('../../public/images/background-img.jpg');
+    background-size: cover;
 }
+
+/* Styles for the login page*/
+.login-container {
+    width: 300px;
+    height: 350px;
+    position: relative;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    border: 1px solid #fff;
+}
+.login-container::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    z-index: -1;
+}
+.login-box {
+    max-width: 250px;
+    margin: 0 auto;
+    text-align: center;
+}
+.login-box h2 {
+    color: #000000;
+    margin-top: 30px;
+    margin-bottom: -20px;
+}
+.login-box p {
+    font-size: 12px;
+    color: #000000;
+    margin-top: 15px;
+}
+.login-box p a{
+    text-decoration: none;
+    color: #000000;
+    font-weight: bold;
+}
+
+/* Styles for the create account page*/
+.register-container {
+    width: 300px;
+    height: 450px;
+    position: relative;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    border: 1px solid #fff;
+}
+.register-container::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    z-index: -1;
+}
+.register-box {
+    max-width: 250px;
+    margin: 0 auto;
+    text-align: center;
+}
+.register-box h2 {
+    color: #000000;
+    margin-top: 30px;
+    margin-bottom: -20px;
+}
+.register-box p {
+    font-size: 12px;
+    color: #000000;
+    margin-top: 15px;
+}
+.register-box p a{
+    text-decoration: none;
+    color: #000000;
+    font-weight: bold;
+}
+
+/* Styles for the enter information page*/
+.enter-info-container {
+    width: 300px;
+    height: 550px;
+    position: relative;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    border: 1px solid #fff;
+}
+.enter-info-container::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    z-index: -1;
+}
+.enter-info-box {
+    max-width: 250px;
+    margin: 0 auto;
+    text-align: center;
+}
+.enter-info-box h2 {
+    color: #000000;
+    margin-top: 30px;
+    margin-bottom: -20px;
+}
+.enter-info-box p {
+    font-size: 12px;
+    color: #000000;
+    margin-top: 15px;
+}
+.enter-info-box p a{
+    text-decoration: none;
+    color: #000000;
+    font-weight: bold;
+}
+
+/* Styles for the nav bar*/
 .nav-container {
     position: fixed;
     top: 0;
@@ -168,6 +301,32 @@ body {
 }
 
 /* Styles for the home page */
+.dashboard-container h1 {
+    text-align: center;
+}
+.cards-container {
+    position: relative;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    border: 1px solid #fff;
+}
+.cards-container::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    z-index: -1;
+}
+
+/* Styles for the stats page */
+.stats-container {
+    text-align: center;
+}
 
 /* Profile Image Styles */
 .profile-collapsable {

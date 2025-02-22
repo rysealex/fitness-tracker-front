@@ -70,7 +70,61 @@ function Login() {
   };
   return (
     <>
-      <div className='login-container'>
+      <div class="login-container">
+        <div class="login-box">
+          <h2>Login</h2>
+            <form onSubmit={handleSubmit}>
+              <TextField
+                className='textfield'
+                error={usernameError || usernameNoEntry}
+                id="outlined-basic"
+                label="Username"
+                variant="outlined"
+                helperText={usernameError ? "Username does not exist" : (usernameNoEntry && "Enter a Username")}
+                value={username}
+                onChange={handleUsernameChange}
+                style={{padding: '10px',
+                  marginTop: '25px',
+                  border: 'none',
+                  borderRadius: '10px',
+                  background: 'transparent',
+                  border: '1px solid #fff',
+                  color: '#fff',
+                  fontSize: '13px'}}
+              />
+              <TextField
+                className='textfield'
+                error={passwordError || passwordNoEntry}
+                id="outlined-basic"
+                label="Password"
+                variant="outlined"
+                type="password"
+                helperText={passwordError ? "Incorrect password" : (passwordNoEntry && "Enter a Password")}
+                value={password}
+                onChange={handlePasswordChange}
+                style={{padding: '10px',
+                  marginTop: '25px',
+                  border: 'none',
+                  borderRadius: '10px',
+                  background: 'transparent',
+                  border: '1px solid #fff',
+                  color: '#fff',
+                  fontSize: '13px'}}
+              />
+              <Button 
+                variant="contained" 
+                type="submit"
+                style={{marginTop: '15px'
+                }}>
+                  Login
+              </Button>
+            </form>
+            <p>Don't have an account? 
+              <a href="" onClick={() => handleNavigate("/create-account")}>    Register</a>
+            </p>
+        </div>
+      </div>
+      {/*<div className='login-container'>
         <h1>Login</h1>
         <Box
           component="form"
@@ -107,7 +161,7 @@ function Login() {
             </Stack>
           </Stack>
         </Box>
-      </div>
+      </div>*/}
     </>
   );
 };

@@ -1,17 +1,43 @@
-import React from 'react';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import '../styles/index.css'
+import React, { useState, useEffect } from 'react';
+import { useUser } from '../userContext';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import '../styles/index.css'
 
-function Welcome() {
+function Stats() {
   const navigate = useNavigate();
   const handleNavigate = (url) => {
     navigate(url);
   };
+  const { username, setUsername } = useUser();
+  const [stats, setStats] = useState({});
+  // Event handler for nav bar buttons
+  const handleSignOut = (event) => {
+    setUsername("");
+    handleNavigate('/');
+  };
+  const handleClickDashboard = () => {
+    handleNavigate('/home');
+  };
+  const handleClickStats = () => {
+    handleNavigate('/stats');
+  };
+  // Fetch user stats
+  useEffect(() => {
+    if (username) {
+      axios.get(`http://127.0.0.1:5000/user/${username}/stats`)
+        .then(function (response) {
+          console.log(response);
+          setStats(response.data);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+  }, [username])
   return (
-    <div className='main-container'>
-      {/*<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <div className='stats-container'>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
       <aside className='nav-container'>
         <div className='nav-header'>
           <img src='/images/muscle-logo.png' alt='logo'></img>
@@ -23,13 +49,13 @@ function Welcome() {
             <div className='menu-separator'></div>
           </h4>
           <li>
-            <a href='#'><span 
+            <a href='' onClick={() => handleClickDashboard()}><span 
             class="material-symbols-outlined">
               dashboard
               </span>Dashboard</a>
           </li>
           <li>
-            <a href='#'><span 
+            <a href='' onClick={() => handleClickStats()}><span 
             class="material-symbols-outlined">
               monitoring
               </span>Stats</a>
@@ -53,7 +79,7 @@ function Welcome() {
               </span>Settings</a>
           </li>
           <li>
-            <a href='#'><span 
+            <a href='' onClick={() => handleSignOut()}><span 
             class="material-symbols-outlined">
               logout
               </span>Logout</a>
@@ -64,34 +90,17 @@ function Welcome() {
             <img src='/images/yami.png'
             alt='profile-img'></img>
             <div className='user-detail'>
-              <h3>Alex Ryse</h3>
+              <h3>{stats.fname} {stats.lname}</h3>
               <span>Software Engineer</span>
             </div>
           </div>
         </div>
-      </aside>*/}
-      <div className='welcome-container'>
-        <h1>Welcome</h1>
-        <h2>Fitness Tracker</h2>
-        <Stack className='button-container' spacing={2} direction="row" >
-          <Button 
-            className='log-in' 
-            variant="contained" 
-            onClick={() => handleNavigate("/login")}
-          >
-            Login
-          </Button>
-          <Button 
-            className='create-account' 
-            variant="contained" 
-            onClick={() => handleNavigate("/create-account")}
-          >
-            Create Account
-          </Button>
-        </Stack>
-      </div>
+      </aside>
+      <section className='stats-container'>
+        <h1>Your Stats</h1>
+      </section>
     </div>
   );
 };
 
-export default Welcome;
+export default Stats;
