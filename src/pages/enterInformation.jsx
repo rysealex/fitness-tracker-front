@@ -11,10 +11,12 @@ import FormControl from '@mui/material/FormControl';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { FormHelperText, InputLabel } from '@mui/material';
+import { useAudio } from '../AudioContext';
 
 function EnterInformation() {
   const navigate = useNavigate();
   const { username } = useUser();
+  const { startAudio } = useAudio();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [height, setHeight] = useState("");
@@ -243,7 +245,16 @@ function EnterInformation() {
                 </Select>
                 {errors.gender && <FormHelperText>{errors.gender}</FormHelperText>}
               </FormControl>
-              <Button variant="contained" type="submit">Continue</Button>
+              <Button 
+                variant="contained" 
+                type="submit"
+                onClick={startAudio}
+                style={{
+                  backgroundColor: '#C51D34'
+                }}
+              >
+                Continue
+              </Button>
             </form>
         </div>
       </div>

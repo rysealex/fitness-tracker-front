@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import '../styles/index.css'
@@ -10,7 +10,7 @@ function Welcome() {
     navigate(url);
   };
   return (
-    <div className='main-container'>
+    <div>
       {/*<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
       <aside className='nav-container'>
         <div className='nav-header'>
@@ -71,22 +71,34 @@ function Welcome() {
         </div>
       </aside>*/}
       <div className='welcome-container'>
-        <h1>Welcome</h1>
-        <h2>Fitness Tracker</h2>
+        <div className='logo-container'>
+          <img src='/images/muscle-logo.png' alt='logo'></img>
+        </div>
+        <h1>Fitness Tracker</h1>
         <Stack className='button-container' spacing={2} direction="row" >
           <Button 
             className='log-in' 
             variant="contained" 
-            onClick={() => handleNavigate("/login")}
+            onClick={ () => 
+              handleNavigate("/login")
+            }
+            style={{
+              backgroundColor: '#C51D34'
+            }}
           >
             Login
           </Button>
           <Button 
             className='create-account' 
             variant="contained" 
-            onClick={() => handleNavigate("/create-account")}
+            onClick={ () => 
+              handleNavigate("/create-account")
+            }
+            style={{
+              backgroundColor: '#C51D34'
+            }}
           >
-            Create Account
+            Register
           </Button>
         </Stack>
       </div>

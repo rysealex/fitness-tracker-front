@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useAudio } from '../AudioContext';
 
 function Login() {
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ function Login() {
   const [passwordError, setPasswordError] = useState(false);
   const [usernameNoEntry, setUsernameNoEntry] = useState(false);
   const [passwordNoEntry, setPasswordNoEntry] = useState(false);
+  const { startAudio } = useAudio();
   // Reset the username on component unmount
   useEffect(() => {
     return () => {
@@ -114,7 +116,9 @@ function Login() {
               <Button 
                 variant="contained" 
                 type="submit"
-                style={{marginTop: '15px'
+                onClick={startAudio}
+                style={{marginTop: '15px',
+                  backgroundColor: '#C51D34'
                 }}>
                   Login
               </Button>

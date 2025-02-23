@@ -144,7 +144,8 @@ function CreateAccount() {
             <Button 
               variant="contained" 
               type="submit"
-              style={{marginTop: '15px'
+              style={{marginTop: '15px',
+                backgroundColor: '#C51D34'
               }}>
                 Create
             </Button>

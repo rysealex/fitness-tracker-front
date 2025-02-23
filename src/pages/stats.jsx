@@ -22,6 +22,12 @@ function Stats() {
   const handleClickStats = () => {
     handleNavigate('/stats');
   };
+  const handleClickProfile = () => {
+    handleNavigate('/profile');
+  };
+  const handleClickSettings = () => {
+    handleNavigate('/settings');
+  };
   // Fetch user stats
   useEffect(() => {
     if (username) {
@@ -36,7 +42,7 @@ function Stats() {
     }
   }, [username])
   return (
-    <div className='stats-container'>
+    <div>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
       <aside className='nav-container'>
         <div className='nav-header'>
@@ -67,13 +73,13 @@ function Stats() {
               </span>Notifications</a>
           </li>
           <li>
-            <a href='#'><span 
+            <a href='' onClick={() => handleClickProfile()}><span 
             class="material-symbols-outlined">
               account_circle
               </span>Profile</a>
           </li>
           <li>
-            <a href='#'><span 
+            <a href='' onClick={() => handleClickSettings()}><span 
             class="material-symbols-outlined">
               settings
               </span>Settings</a>
@@ -98,6 +104,12 @@ function Stats() {
       </aside>
       <section className='stats-container'>
         <h1>Your Stats</h1>
+        <ul>
+          <li>Age: </li>
+          <li>Gender: </li>
+          <li>Height: </li>
+          <li>Weight: </li>
+        </ul>
       </section>
     </div>
   );

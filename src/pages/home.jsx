@@ -38,6 +38,12 @@ function Home() {
   const handleClickStats = () => {
     handleNavigate('/stats');
   };
+  const handleClickProfile = () => {
+    handleNavigate('/profile');
+  };
+  const handleClickSettings = () => {
+    handleNavigate('/settings');
+  };
   // Event handler for edit buttons
   const [editModeWeight, setEditModeWeight] = useState(false);
   const handleClickWeight = () => {
@@ -254,13 +260,13 @@ function Home() {
               </span>Notifications</a>
           </li>
           <li>
-            <a href='#'><span 
+            <a href='' onClick={() => handleClickProfile()}><span 
             class="material-symbols-outlined">
               account_circle
               </span>Profile</a>
           </li>
           <li>
-            <a href='#'><span 
+            <a href='' onClick={() => handleClickSettings()}><span 
             class="material-symbols-outlined">
               settings
               </span>Settings</a>

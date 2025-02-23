@@ -31,17 +31,17 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-image: url('../../public/images/background-img.jpg');
+    background-image: linear-gradient(to right, #808080, #2E2E30);
     background-size: cover;
 }
 
 /* Styles for the login page*/
 .login-container {
     width: 300px;
-    height: 350px;
+    height: 375px;
     position: relative;
     z-index: 1;
-    background: rgba(255, 255, 255, 0.1);
+    background: #808080;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     border: 1px solid #fff;
@@ -62,9 +62,11 @@ body {
     text-align: center;
 }
 .login-box h2 {
-    color: #000000;
+    color: #C51D34;
     margin-top: 30px;
     margin-bottom: -20px;
+    font-size: 35px;
+    text-shadow: 1px 1px 2px #C51D34, 0 0 1em rgb(0, 0, 0), 0 0 0.2em rgb(0, 0, 0);
 }
 .login-box p {
     font-size: 12px;
@@ -73,7 +75,7 @@ body {
 }
 .login-box p a{
     text-decoration: none;
-    color: #000000;
+    color: #C51D34;
     font-weight: bold;
 }
 
@@ -83,7 +85,7 @@ body {
     height: 450px;
     position: relative;
     z-index: 1;
-    background: rgba(255, 255, 255, 0.1);
+    background: #808080;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     border: 1px solid #fff;
@@ -104,19 +106,11 @@ body {
     text-align: center;
 }
 .register-box h2 {
-    color: #000000;
+    color: #C51D34;
     margin-top: 30px;
     margin-bottom: -20px;
-}
-.register-box p {
-    font-size: 12px;
-    color: #000000;
-    margin-top: 15px;
-}
-.register-box p a{
-    text-decoration: none;
-    color: #000000;
-    font-weight: bold;
+    font-size: 35px;
+    text-shadow: 1px 1px 2px #C51D34, 0 0 1em rgb(0, 0, 0), 0 0 0.2em rgb(0, 0, 0);
 }
 
 /* Styles for the enter information page*/
@@ -125,7 +119,7 @@ body {
     height: 550px;
     position: relative;
     z-index: 1;
-    background: rgba(255, 255, 255, 0.1);
+    background: #808080;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     border: 1px solid #fff;
@@ -146,19 +140,9 @@ body {
     text-align: center;
 }
 .enter-info-box h2 {
-    color: #000000;
+    color: #C51D34;
     margin-top: 30px;
     margin-bottom: -20px;
-}
-.enter-info-box p {
-    font-size: 12px;
-    color: #000000;
-    margin-top: 15px;
-}
-.enter-info-box p a{
-    text-decoration: none;
-    color: #000000;
-    font-weight: bold;
 }
 
 /* Styles for the nav bar*/
@@ -171,7 +155,7 @@ body {
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
-    background-color: rgb(161, 4, 4);
+    background-color: #C51D34;
     padding: 25px 20px;
     transition: all 0.4s ease;
 }
@@ -189,7 +173,7 @@ body {
 .nav-header h2 {
     font-size: 1.25em;
     font-weight: 600;
-    color: white;
+    color: #F5F5F5;
     margin-left: 23px;
 }
 .nav-links {
@@ -200,7 +184,7 @@ body {
     scrollbar-width: none;
 }
 .nav-links h4 {
-    color: white;
+    color: #F5F5F5;
     font-weight: 500;
     margin: 10px 0;
     white-space: nowrap;
@@ -277,37 +261,34 @@ body {
 }
 
 /* Styles for the welcome page */
-.welcome-container {
-    text-align: center;
-    flex-grow: 1;
+.welcome-container h1 {
+    color: #C51D34;
+    font-size: 5em;
+    text-shadow: 1px 1px 2px #C51D34, 0 0 1em rgb(0, 0, 0), 0 0 0.2em rgb(0, 0, 0);
+    margin-bottom: 15px;
 }
-.button-container {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    justify-content: center;
-    gap: 50px;
+.welcome-container img {
+    width: 100px;
+    border-radius: 50%;
 }
-.log-in {
-    padding: 10px 20px;
-    border-radius: 5px;
-    background-color: gray;
+.welcome-container .button-container .log-in {
+    margin-right: 10px;
 }
-.create-account {
-    padding: 10px 20px;
-    border-radius: 5px;
+.welcome-container .button-container .create-account {
+    margin-right: 10px;
 }
 
 /* Styles for the home page */
 .dashboard-container h1 {
     text-align: center;
+    color: #C51D34;
+    font-size: 35px;
+    text-shadow: 1px 1px 2px #C51D34, 0 0 1em rgb(0, 0, 0), 0 0 0.2em rgb(0, 0, 0);
 }
 .cards-container {
     position: relative;
     z-index: 1;
-    background: rgba(255, 255, 255, 0.1);
+    background: #808080;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     border: 1px solid #fff;
@@ -324,8 +305,27 @@ body {
 }
 
 /* Styles for the stats page */
-.stats-container {
+.stats-container h1 {
     text-align: center;
+    color: #C51D34;
+    font-size: 35px;
+    text-shadow: 1px 1px 2px #C51D34, 0 0 1em rgb(0, 0, 0), 0 0 0.2em rgb(0, 0, 0);
+}
+
+/* Styles for the profile page */
+.profile-container h1 {
+    text-align: center;
+    color: #C51D34;
+    font-size: 35px;
+    text-shadow: 1px 1px 2px #C51D34, 0 0 1em rgb(0, 0, 0), 0 0 0.2em rgb(0, 0, 0);
+}
+
+/* Styles for the settings page */
+.settings-container h1 {
+    text-align: center;
+    color: #C51D34;
+    font-size: 35px;
+    text-shadow: 1px 1px 2px #C51D34, 0 0 1em rgb(0, 0, 0), 0 0 0.2em rgb(0, 0, 0);
 }
 
 /* Profile Image Styles */
