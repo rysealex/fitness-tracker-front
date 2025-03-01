@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useAudio } from '../AudioContext';
 import { useUser } from '../userContext';
 import { Container } from '@mui/material';
 import Button from '@mui/material/Button';
@@ -27,6 +28,12 @@ function Home() {
   const [profileVisible, setProfileVisible] = useState(false);
   const [profilePicture, setProfilePicture] = useState(null);
   const [previewPicture, setPreviewPicture] = useState(null);
+  const { startAudio, isPlaying } = useAudio();
+  useEffect(() => {
+    if (!isPlaying) {
+      startAudio(); // Start audio if not already playing
+    }
+  }, [isPlaying, startAudio]);
   // Event handler for nav bar buttons
   const handleSignOut = (event) => {
     setUsername("");
@@ -161,6 +168,9 @@ function Home() {
   };
   // Fetch user stats
   useEffect(() => {
+    if (!isPlaying) {
+      startAudio();
+    }
     if (username) {
       axios.get(`http://127.0.0.1:5000/user/${username}/stats`)
         .then(function (response) {
@@ -174,7 +184,7 @@ function Home() {
           console.log(error);
         });
     }
-  }, [username])
+  }, [username, isPlaying, startAudio]);
   return (
     <div>
       {/*<aside className='profile-collapsable'>
@@ -289,8 +299,11 @@ function Home() {
           </div>
         </div>
       </aside>
+      <div className='current-date'>
+        <h2>Today's Date: <CurrentDate /></h2>
+      </div>
       <section className='dashboard-container'>
-        <h1>Welcome {stats.fname}!</h1>
+        <h1>Welcome {stats.fname}!</h1>      
         <div className='cards-container'>
           <Stack direction="row" spacing={2}>
             <Card sx={{ maxWidth: 345 }}>

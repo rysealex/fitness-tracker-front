@@ -3,6 +3,8 @@ import { useUser } from '../userContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/index.css'
+import MediaControlCard from '../mediaControlCard';
+import { useAudio } from '../AudioContext';
 
 function Settings() {
   const navigate = useNavigate();
@@ -11,9 +13,13 @@ function Settings() {
   };
   const { username, setUsername } = useUser();
   const [stats, setStats] = useState({});
+  //const [isPlaying, setIsPlaying] = useState(false);
+  //const [currentTrack, setCurrentTrack] = useState("Track 1");
+  const { isPlaying, currentSongIndex, togglePlayPause, skipNext, skipPrevious, songs, stopAudio } = useAudio();
   // Event handler for nav bar buttons
   const handleSignOut = (event) => {
     setUsername("");
+    stopAudio();
     handleNavigate('/');
   };
   const handleClickDashboard = () => {
@@ -40,7 +46,24 @@ function Settings() {
           console.log(error);
         });
     }
-  }, [username])
+  }, [username]);
+  // handler for controlling the audio state
+  /*const togglePlayPause = () => {
+    if (audioRef.current.paused) {
+      audioRef.current.play();
+      setIsPlaying(true);
+    } else {
+      audioRef.current.pause();
+      setIsPlaying(false);
+    }
+  };
+  // handlers for skipping to next and previous tracks
+  const skipNext = () => {
+    setCurrentTrack("Next Track");
+  };
+  const skipPrevious = () => {
+    setCurrentTrack("Previous Track");
+  };*/
   return (
     <div>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
@@ -103,8 +126,16 @@ function Settings() {
         </div>
       </aside>
       <section className='settings-container'>
-        <h1>Settings</h1>
+        <h1>Settings</h1> 
         <h2>Change Music</h2>
+        <MediaControlCard
+          isPlaying={isPlaying}
+          currentTrack={songs[currentSongIndex]?.name}
+          togglePlayPause={togglePlayPause}
+          skipNext={skipNext}
+          skipPrevious={skipPrevious}
+        />
+        {/*<audio ref={audioRef} src='audio\Luke Bergs & Waesto - Take Off (freetouse.com).mp3'/>*/}
         <h2>Delete Account</h2>
       </section>
     </div>
