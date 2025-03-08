@@ -19,7 +19,7 @@ function Stats() {
   const [errorHeight, setErrorHeight] = useState(false); 
   const [errorWeight, setErrorWeight] = useState(false); 
   const [helperTextHeight, setHelperTextHeight] = useState('');
-  const [helperTextWeight, setHelperTextWeight] = useState('')
+  const [helperTextWeight, setHelperTextWeight] = useState('');
   // Event handler for nav bar buttons
   const handleSignOut = (event) => {
     setUsername("");

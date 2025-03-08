@@ -11,9 +11,9 @@ export const useAudio = () => {
 // AudioProvider component to manage the audio globally
 export const AudioProvider = ({ children }) => {
   const songs = [
-    { name: "Track 1", url: '/audio/Luke Bergs & Waesto - Take Off (freetouse.com).mp3' },
-    { name: "Track 2", url: '/audio/Epic Spectrum - Wayfarer (freetouse.com).mp3' },
-    { name: "Track 3", url: '/audio/Lukrembo - Marshmallow (freetouse.com).mp3' }
+    { name: "Track 1", url: '/audio/Luke%20Bergs%20%26%20Waesto%20-%20Take%20Off%20(freetouse.com).mp3' },
+    { name: "Track 2", url: '/audio/Epic%20Spectrum%20-%20Wayfarer%20(freetouse.com).mp3' },
+    { name: "Track 3", url: '/audio/Lukrembo%20-%20Marshmallow%20(freetouse.com).mp3' }
   ];
 
   const audioRef = useRef(new Audio(songs[0].url)); // Initially set to the first song
@@ -41,14 +41,18 @@ export const AudioProvider = ({ children }) => {
 
   // Function to start playing the current audio
   const startAudio = () => {
-    const audio = audioRef.current;
-    if (audio.paused) {
-      audio.play().catch((error) => {
-        console.error('Error playing audio:', error);
-      });
-      setIsPlaying(true);
-    }
+  const audio = audioRef.current;
+  audio.oncanplaythrough = () => { // Ensure the audio is fully loaded
+    audio.play().catch((error) => {
+      console.error('Error playing audio:', error);
+    });
   };
+  if (audio.readyState === 4) { // Check if it's already ready to play
+    audio.play().catch((error) => {
+      console.error('Error playing audio:', error);
+    });
+  }
+};
 
   // Function to stop (pause) the audio
   const stopAudio = () => {
@@ -60,15 +64,19 @@ export const AudioProvider = ({ children }) => {
   // Function to toggle play/pause
   const togglePlayPause = () => {
     const audio = audioRef.current;
-
+  
     if (isPlaying) {
-      audio.pause(); // Pause the audio if it's currently playing
-      setIsPlaying(false); // Update the state to reflect the pause
+      audio.pause();
+      setTimeout(() => {
+        setIsPlaying(false); // Update state after the pause is effective
+      }, 100); // Slight delay to allow pause to complete
     } else {
       audio.play().catch((error) => {
-        console.error('Error playing audio:', error); // Log any errors if audio can't be played
+        console.error('Error playing audio:', error);
       });
-      setIsPlaying(true); // Update the state to reflect the play
+      setTimeout(() => {
+        setIsPlaying(true); // Update state after the play is effective
+      }, 100); // Slight delay to allow play to complete
     }
   };
 
@@ -76,20 +84,29 @@ export const AudioProvider = ({ children }) => {
   const skipNext = () => {
     let nextIndex = (currentSongIndex + 1) % songs.length;
     setCurrentSongIndex(nextIndex);
-    audioRef.current.src = songs[nextIndex].url; // Change the audio source to the next song
-    if (isPlaying) {
-      audioRef.current.play(); // Play the new song if it's already playing
-    }
+    
+    const audio = audioRef.current;
+    audio.pause(); // Pause before changing source
+    audio.src = songs[nextIndex].url; // Change the audio source to the next song
+    
+    // Play the new song if it's already playing
+    audio.play().catch((error) => {
+      console.error('Error playing audio after skipping:', error);
+    });
   };
-
-  // Function to go to the previous song
+  
   const skipPrevious = () => {
     let prevIndex = (currentSongIndex - 1 + songs.length) % songs.length;
     setCurrentSongIndex(prevIndex);
-    audioRef.current.src = songs[prevIndex].url; // Change the audio source to the previous song
-    if (isPlaying) {
-      audioRef.current.play(); // Play the new song if it's already playing
-    }
+  
+    const audio = audioRef.current;
+    audio.pause(); // Pause before changing source
+    audio.src = songs[prevIndex].url; // Change the audio source to the previous song
+  
+    // Play the new song if it's already playing
+    audio.play().catch((error) => {
+      console.error('Error playing audio after skipping:', error);
+    });
   };
 
   return (

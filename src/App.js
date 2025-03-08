@@ -8,6 +8,7 @@ import EnterInformation from "./pages/enterInformation"
 import Stats from "./pages/stats"
 import Profile from "./pages/profile"
 import Settings from "./pages/settings"
+import CalorieCounter from './pages/calorieCounter';
 import './App.css';
 import React from 'react';
 
@@ -26,6 +27,7 @@ function App() {
           <Route path="/stats" element={<Stats />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/calorie-counter" element={<CalorieCounter />} />
         </Routes>
       </Router>
     </AudioProvider>

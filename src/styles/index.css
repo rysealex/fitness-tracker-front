@@ -340,6 +340,64 @@ body {
     text-shadow: 1px 1px 2px #C51D34, 0 0 1em rgb(0, 0, 0), 0 0 0.2em rgb(0, 0, 0);
 }
 
+/* Styles for the calorie counter page */
+.calorie-counter-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
+.calorie-counter-container h1 {
+    text-align: center;
+    color: #C51D34;
+    font-size: 35px;
+    text-shadow: 1px 1px 2px #C51D34, 0 0 1em rgb(0, 0, 0), 0 0 0.2em rgb(0, 0, 0);
+}
+.icon-container {
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.5s ease-in-out;
+    padding: 50px;
+
+}
+.icon-container:hover {
+    transform: scale(1.2);
+}
+.exit-container {
+    margin-top: 10px;
+}
+.speed-dial-container {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+}
+@keyframes fireBurst {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.5);
+        opacity: 0.6;
+    }
+    100% {
+        transform: scale(0);
+        opacity: 0;
+    }
+}
+.fireburst {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-color: orange;
+    border-radius: 50%;
+    animation: fireBurst 1s ease-out;
+    pointer-events: none;
+}
+
 /* Profile Image Styles */
 .profile-collapsable {
     position: absolute;

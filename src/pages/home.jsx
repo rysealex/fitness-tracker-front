@@ -51,6 +51,10 @@ function Home() {
   const handleClickSettings = () => {
     handleNavigate('/settings');
   };
+  // event handler for calorie counter button
+  const handleClickCalorieCounter = () => {
+    handleNavigate('/calorie-counter');
+  };
   // Event handler for edit buttons
   const [editModeWeight, setEditModeWeight] = useState(false);
   const handleClickWeight = () => {
@@ -340,8 +344,16 @@ function Home() {
                 </Typography>
               </CardContent>
               <CardActions>
-                <Button size="small">Share</Button>
-                <Button size="small">Learn More</Button>
+                {/*<Button size="small">Enter</Button>
+                <Button size="small">Learn More</Button>*/}
+                <Button
+                  variant='contained'
+                  style={{
+                    backgroundColor: '#C51D34'
+                  }}
+                  onClick={handleClickCalorieCounter}> 
+                  Enter
+                </Button>
               </CardActions>
             </Card>
           </Stack>

@@ -5,6 +5,7 @@ import axios from 'axios';
 import '../styles/index.css'
 import MediaControlCard from '../mediaControlCard';
 import { useAudio } from '../AudioContext';
+import FormDialog from '../formDialog';
 
 function Settings() {
   const navigate = useNavigate();
@@ -136,7 +137,7 @@ function Settings() {
           skipPrevious={skipPrevious}
         />
         {/*<audio ref={audioRef} src='audio\Luke Bergs & Waesto - Take Off (freetouse.com).mp3'/>*/}
-        <h2>Delete Account</h2>
+        <FormDialog />
       </section>
     </div>
   );
