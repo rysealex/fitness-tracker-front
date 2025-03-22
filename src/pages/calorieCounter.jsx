@@ -1,10 +1,11 @@
-import { Button, Dialog, DialogContent, DialogActions, DialogTitle, TextField, Slide } from "@mui/material";
+import { Button, Dialog, DialogContent, DialogActions, DialogTitle, TextField } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import BasicSpeedDial from "../basicSpeedDial";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Box from "@mui/material/Box"
 import Slider from "@mui/material/Slider";
-import { faFire, faFireFlameCurved } from '@fortawesome/free-solid-svg-icons';
+import { faFireFlameCurved } from '@fortawesome/free-solid-svg-icons';
 
 function CalorieCounter() {
     const navigate = useNavigate();
@@ -12,6 +13,7 @@ function CalorieCounter() {
 			navigate(url);
 		};
 		const [fireBurstVisible, setFireBurstVisible] = useState(false);
+		const [calorieValue, setCalorieValue] = useState(0);
 		// state for all the modals
 		const [breakfastMode, setBreakfastMode] = useState(false);
 		const [lunchMode, setLunchMode] = useState(false);
@@ -31,6 +33,10 @@ function CalorieCounter() {
 			setFireBurstVisible(true);
 			setTimeout(() => setFireBurstVisible(false), 1000); // remove burst after 1 sec
 		}
+		// event handler for the calorie slider
+		const handleSliderChange = (event, newValue) => {
+			setCalorieValue(newValue);
+		};
 		// event handlers for each click
 		const handleBreakfastClick = () => {
 			console.log("Success");
@@ -125,20 +131,47 @@ function CalorieCounter() {
 						/>
 					</div>
 					<div className="slider-container">
-						
+						<Box sx={{ width: 300 }}>
+							<Slider
+								aria-label="Calories"
+								value={calorieValue}
+								onChange={handleSliderChange}
+								valueLabelDisplay="auto"
+								step={10}
+								marks
+								min={0}
+								max={100}
+							/>
+						</Box>
 					</div>
 				</div>
 				<Dialog open={breakfastMode} onClose={handleCloseModal}>
 					<DialogTitle>Enter Your Breakfast</DialogTitle>
-					<DialogContent>
+					<DialogContent sx={{ width: '500px', height: '400px' }}>
 						<TextField
-							label="Breakfast"
+							label="Breakfast Item"
 							variant="outlined"
 							fullWidth
 							value={breakfastInput}
 							onChange={(e) => handleInputChange('breakfast', e)}
 							autoFocus
+							style={{
+								marginTop: '10px',
+							}}
 						/>
+						<h2>Calories:</h2>
+						<Box sx={{ width: 300 }}>
+							<Slider
+								aria-label="Calories"
+								value={calorieValue}
+								onChange={handleSliderChange}
+								valueLabelDisplay="auto"
+								step={10}
+								marks
+								min={0}
+								max={100}
+							/>
+						</Box>
 					</DialogContent>
 					<DialogActions>
 						<Button onClick={handleCloseModal}>
