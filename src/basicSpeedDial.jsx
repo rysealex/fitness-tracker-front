@@ -15,15 +15,21 @@ const actions = [
   { name: 'Breakfast', icon: <FontAwesomeIcon icon={faBacon}/> },
 ];
 
-export default function BasicSpeedDial() {
+export default function BasicSpeedDial({ onBreakfastClick, onLunchClick, onDinnerClick, onSnacksClick }) {
   return (
     <Box sx={{ height: 320, transform: 'translateZ(0px)', flexGrow: 1 }}>
       <SpeedDial
-        ariaLabel="SpeedDial with images"
+        ariaLabel="Calorie Counter SpeedDial"
         sx={{ 
           position: 'absolute', 
           bottom: 16, 
-          right: 16
+          right: 16,
+          '& .MuiFab-root': {
+            backgroundColor: '#C51D34',
+            '&:hover': {
+              backgroundColor: '#808080'
+            }
+          }
         }}
         icon={<SpeedDialIcon />} 
       >
@@ -36,6 +42,17 @@ export default function BasicSpeedDial() {
               </Tooltip>
             }
             tooltipTitle={action.name}
+            onClick={() => {
+              if (action.name === 'Breakfast' && onBreakfastClick) {
+                onBreakfastClick();
+              } else if (action.name === 'Lunch' && onLunchClick) {
+                onLunchClick();
+              } else if (action.name === 'Dinner' && onDinnerClick) {
+                onDinnerClick();
+              } else if (action.name === 'Snacks' && onSnacksClick) {
+                onSnacksClick();
+              } 
+            }}
           />
         ))}
       </SpeedDial>

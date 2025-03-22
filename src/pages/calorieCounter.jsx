@@ -1,8 +1,9 @@
-import { Button } from "@mui/material";
+import { Button, Dialog, DialogContent, DialogActions, DialogTitle, TextField, Slide } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import BasicSpeedDial from "../basicSpeedDial";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Slider from "@mui/material/Slider";
 import { faFire, faFireFlameCurved } from '@fortawesome/free-solid-svg-icons';
 
 function CalorieCounter() {
@@ -11,6 +12,16 @@ function CalorieCounter() {
 			navigate(url);
 		};
 		const [fireBurstVisible, setFireBurstVisible] = useState(false);
+		// state for all the modals
+		const [breakfastMode, setBreakfastMode] = useState(false);
+		const [lunchMode, setLunchMode] = useState(false);
+		const [dinnerMode, setDinnerMode] = useState(false);
+		const [snacksMode, setSnacksMode] = useState(false);
+		// state for each input
+		const [breakfastInput, setBreakfastInput] = useState("");
+		const [lunchInput, setLunchInput] = useState("");
+		const [dinnerInput, setDinnerInput] = useState("");
+		const [snacksInput, setSnacksInput] = useState("");
 		// event handler for exit calorie counter
 		const handleClickExit = () => {
 			handleNavigate('/home');
@@ -20,6 +31,62 @@ function CalorieCounter() {
 			setFireBurstVisible(true);
 			setTimeout(() => setFireBurstVisible(false), 1000); // remove burst after 1 sec
 		}
+		// event handlers for each click
+		const handleBreakfastClick = () => {
+			console.log("Success");
+			setBreakfastMode(true);
+		};
+		const handleLunchClick = () => {
+			console.log("Success");
+			setLunchMode(true);
+		};
+		const handleDinnerClick = () => {
+			console.log("Success");
+			setDinnerMode(true);
+		};
+		const handleSnacksClick = () => {
+			console.log("Success");
+			setSnacksMode(true);
+		};
+		// handle the input change for all
+		const handleInputChange = (meal, event) => {
+			if (meal === 'breakfast') {
+				setBreakfastInput(event.target.value);
+			} else if (meal === 'lunch') {
+				setLunchInput(event.target.value);
+			} else if (meal === 'dinner') {
+				setDinnerInput(event.target.value);
+			} else if (meal === 'snacks') {
+				setSnacksInput(event.target.value);
+			}
+		};
+		// handle the form submission
+		const handleSubmit = (meal) => {
+			if (meal === 'breakfast') {
+				console.log(`${breakfastInput}`);
+				setBreakfastMode(false);
+				setBreakfastInput('');
+			} else if (meal === 'lunch') {
+				console.log(`${lunchInput}`);
+				setLunchMode(false);
+				setLunchInput('');
+			} else if (meal === 'dinner') {
+				console.log(`${dinnerInput}`);
+				setDinnerMode(false);
+				setDinnerInput('');
+			} else if (meal === 'snacks') {
+				console.log(`${snacksInput}`);
+				setSnacksMode(false);
+				setSnacksInput('');
+			} 
+		};
+		// handle the modal close
+		const handleCloseModal = () => {
+			setBreakfastMode(false);
+			setLunchMode(false);
+			setDinnerMode(false);
+			setSnacksMode(false);
+		};
 		
 		return (
 			<div>
@@ -50,9 +117,101 @@ function CalorieCounter() {
 						</Button>
 					</div>
 					<div className="speed-dial-container">
-						<BasicSpeedDial />
+						<BasicSpeedDial 
+							onBreakfastClick={handleBreakfastClick}
+							onLunchClick={handleLunchClick}
+							onDinnerClick={handleDinnerClick}
+							onSnacksClick={handleSnacksClick}
+						/>
+					</div>
+					<div className="slider-container">
+						
 					</div>
 				</div>
+				<Dialog open={breakfastMode} onClose={handleCloseModal}>
+					<DialogTitle>Enter Your Breakfast</DialogTitle>
+					<DialogContent>
+						<TextField
+							label="Breakfast"
+							variant="outlined"
+							fullWidth
+							value={breakfastInput}
+							onChange={(e) => handleInputChange('breakfast', e)}
+							autoFocus
+						/>
+					</DialogContent>
+					<DialogActions>
+						<Button onClick={handleCloseModal}>
+							Cancel
+						</Button>
+						<Button onClick={() => handleSubmit('breakfast')}>
+							Submit
+						</Button>
+					</DialogActions>
+				</Dialog>
+				<Dialog open={lunchMode} onClose={handleCloseModal}>
+					<DialogTitle>Enter Your Lunch</DialogTitle>
+					<DialogContent>
+						<TextField
+							label="Lunch"
+							variant="outlined"
+							fullWidth
+							value={lunchInput}
+							onChange={(e) => handleInputChange('lunch', e)}
+							autoFocus
+						/>
+					</DialogContent>
+					<DialogActions>
+						<Button onClick={handleCloseModal}>
+							Cancel
+						</Button>
+						<Button onClick={() => handleSubmit('lunch')}>
+							Submit
+						</Button>
+					</DialogActions>
+				</Dialog>
+				<Dialog open={dinnerMode} onClose={handleCloseModal}>
+					<DialogTitle>Enter Your Dinner</DialogTitle>
+					<DialogContent>
+						<TextField
+							label="Dinner"
+							variant="outlined"
+							fullWidth
+							value={dinnerInput}
+							onChange={(e) => handleInputChange('dinner', e)}
+							autoFocus
+						/>
+					</DialogContent>
+					<DialogActions>
+						<Button onClick={handleCloseModal}>
+							Cancel
+						</Button>
+						<Button onClick={() => handleSubmit('dinner')}>
+							Submit
+						</Button>
+					</DialogActions>
+				</Dialog>
+				<Dialog open={snacksMode} onClose={handleCloseModal}>
+					<DialogTitle>Enter Your Snacks</DialogTitle>
+					<DialogContent>
+						<TextField
+							label="Snacks"
+							variant="outlined"
+							fullWidth
+							value={snacksInput}
+							onChange={(e) => handleInputChange('snacks', e)}
+							autoFocus
+						/>
+					</DialogContent>
+					<DialogActions>
+						<Button onClick={handleCloseModal}>
+							Cancel
+						</Button>
+						<Button onClick={() => handleSubmit('snacks')}>
+							Submit
+						</Button>
+					</DialogActions>
+				</Dialog>
 			</div>
 		)
 };
